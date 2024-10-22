@@ -4,7 +4,7 @@ import LoginPage from './components/Login';
 import Dashboard from './components/Dashboard';
 import Users from './components/Users';
 import Products from './components/Products';
-import NavBar from './components/Users copy';
+import NavBar from './components/NavBar';
 import { Provider } from 'react-redux';
 import store from './store/store';
 
@@ -13,7 +13,6 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <nav>
-          <NavBar />
         </nav>
         <Routes>
           <Route path="/" element={<LoginPage />} />

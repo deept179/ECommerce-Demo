@@ -17,10 +17,13 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
-      const index = state.items.findIndex((item) => item.id === action.payload); // action.payload is now the id
-      if (index !== -1) {
+      const item = state.items.find((item) => item.id === action.payload);
+      if (item && item.quantity > 1) {
+        item.quantity--;
+      } else if (item && item.quantity === 1) {
+        const index = state.items.findIndex((item) => item.id === action.payload);
         state.items.splice(index, 1);
-      }
+      } 
     },
   },
 });
