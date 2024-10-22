@@ -1,25 +1,50 @@
-import logo from './logo.svg';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
+import LoginPage from './components/Login';
+import Dashboard from './components/Dashboard';
+import Users from './components/Users';
+import Products from './components/Products';
+import NavBar from './components/Users copy';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <nav>
+          <NavBar />
+        </nav>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/users" element={
+            <ProtectedRoute>
+              <Users />
+            </ProtectedRoute>
+          } />
+          <Route path="/products" element={
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+          } />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
+
+const ProtectedRoute = ({ children }) => {
+  const user = localStorage.getItem('user');
+  const password = localStorage.getItem('password');
+
+  // console.log('usename -------> : ', isAuthenticated);
+
+  return (user === "stackdot" && password === "stackdot") ? children : <Navigate to="/" />;
+};
 
 export default App;
